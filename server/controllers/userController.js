@@ -1,5 +1,17 @@
 const User = require("../models/User");
 
+const bcrypt = require("bcryptjs");
+
+async function hashingPass(pass) {
+    try {
+        const hashedPass = await bcrypt.hash(pass, 10);
+        console.log("hashedPass => ", hashedPass);
+        return hashedPass;
+    } catch (error) {
+        console.log("🚫 Error in password hashing =>", error);
+        return false;
+    }
+}
 
 const signupController = async (req, res) =>{
     try{
@@ -21,11 +33,25 @@ const signupController = async (req, res) =>{
             )
         }
 
+        const hashedPass = await hashingPass(password);
+
+        if(!hashedPass){
+            console.log("🚫 Password hashing failed");
+            return(
+                res.status(400).json(
+                    {
+                        success : false ,
+                        message : "Password hashing failed",
+                    }
+                )
+            )
+        }
+
         const createdUser = await User.create(
             { 
                 name,
                 email,
-                password,
+                password : hashedPass,
             }
         );
 
@@ -35,7 +61,7 @@ const signupController = async (req, res) =>{
             res.status(200).json(
                 {
                     success : true ,
-                    message : "user created successfully",
+                    message : "Signup successful",
                     createdUser ,
                 }
             )
@@ -49,7 +75,7 @@ const signupController = async (req, res) =>{
             res.status(500).json(
                 {
                     success : false ,
-                    message : "🚫 user not created",
+                    message : "Signup successful",
                     error : error ,
                 }
             )
