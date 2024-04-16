@@ -13,6 +13,9 @@ async function hashingPass(pass) {
     }
 }
 
+// =====================================================================
+// signupController
+
 const signupController = async (req, res) =>{
     try{
         
@@ -82,6 +85,29 @@ const signupController = async (req, res) =>{
         )
     }
 
+}
+
+// =====================================================================
+// loginController
+
+const loginController = async (req, res) =>{
+    try{
+
+        
+
+    }
+    catch(error){
+        console.log("🚫 Login Failed=>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false ,
+                    message : "Login Failed",
+                    error : error ,
+                }
+            )
+        )
+    }
 }
 
 
