@@ -19,8 +19,18 @@ app.get("/", (req, res)=>{
 
 //=================================
 
-
 dbConnect();
 
+//=================================
+// 💙Middlewares -------------------------------------------------
+app.use(express.json());
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+const cors = require("cors");
+app.use(cors());
 
 
+
+//=============
+const userRoute = require("./routes/userRoute");
+app.use("/user", userRoute);
