@@ -24,6 +24,13 @@ const orderSchema =  new mongoose.Schema({
         type : Number ,
     },
 
+    pizzas : [
+        {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Pizza",
+		},
+    ],
+
 });
 
 // Middleware to update the time array when status is updated
