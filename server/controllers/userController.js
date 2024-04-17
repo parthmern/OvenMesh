@@ -1,6 +1,8 @@
 const User = require("../models/User");
 
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
 
 async function hashingPass(pass) {
     try {
@@ -93,7 +95,64 @@ const signupController = async (req, res) =>{
 const loginController = async (req, res) =>{
     try{
 
-        
+        const {email, password} = req.body ;
+        console.log("name,email,password=>", email, password);
+
+        const findingUser = await User.findOne({email : email});
+
+        if(!findingUser){
+            console.log("🚫 user not available");
+            return(
+                res.status(400).json(
+                    {
+                        success : false ,
+                        message : "User not available",
+                    }
+                )
+            )
+        }
+
+        const tokenData = {
+            id : findingUser?._id, 
+            name : findingUser?.name,
+            email : findingUser?.email
+        }
+
+        const jwtSecret = "parthmern"; 
+
+        const options = {
+            expiresIn: "24h",
+        };
+
+        const jwtToken = await jwt.sign(
+            tokenData,
+            jwtSecret,
+            options,
+        );
+
+        const cookies = {
+            findingUser,
+            token : jwtToken,
+        };
+
+        const cookiesOptions = {
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires after 24 hours
+            httpOnly: true,
+        };
+
+        console.log("✅ loginUser success=>", findingUser, cookies);
+
+        return(
+            res.cookie("token", cookies, cookiesOptions).status(200).json(
+                {
+                    success : true, 
+                    message : "User login success",
+                    findingUser ,
+                    cookies,
+                }
+            )
+        )
+
 
     }
     catch(error){
@@ -111,4 +170,4 @@ const loginController = async (req, res) =>{
 }
 
 
-module.exports = {signupController} ;
+module.exports = {signupController, loginController} ;
