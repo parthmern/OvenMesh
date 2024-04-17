@@ -12,6 +12,8 @@ async function uploadFileToCloudinary(file, folder, quality) {
     return await cloudinary.uploader.upload(file.tempFilePath, options);
 }
 
+// ======================================================
+// Adding pizza
 const pizzaAddingController = async (req, res) =>{
 
     try{
@@ -85,5 +87,42 @@ const pizzaAddingController = async (req, res) =>{
 
 }
 
-module.exports = pizzaAddingController ;
+// ======================================================
+// seeAllPizza getting all pizzas of menu
+const gettingPizzaController = async (req, res) =>{
+    try{
+
+        const allPizzas = await Pizza.find({});
+
+        console.log("allPizzas=> ", allPizzas);
+
+        if(!allPizzas){
+
+        }
+
+        return(
+            res.status(200).json(
+                {
+                    success : true, 
+                    message : "All pizzas fetched successfully", 
+                    allPizzas ,
+                }
+            )
+        )
+
+    }
+    catch(error){
+        console.log("🚫 gettingPizzaController error=>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false ,
+                    message : "Fetching failed for all pizzas"
+                }
+            )
+        )
+    }
+}
+
+module.exports = {pizzaAddingController, gettingPizzaController} ;
 
