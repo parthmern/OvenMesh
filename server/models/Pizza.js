@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const pizzaSchema = new mongoose.model({
+const pizzaSchema = new mongoose.Schema({
 
     name : {
         type : String ,

@@ -1,3 +1,5 @@
+const Pizza = require("../models/Pizza");
+
 const cloudinary = require("cloudinary").v2;
 async function uploadFileToCloudinary(file, folder, quality) {
     const options = { folder };
@@ -46,14 +48,20 @@ const pizzaAddingController = async (req, res) =>{
         
         console.log("uploaded==>", uploaded.secure_url);
 
-        
-        console.log("✅ Pizza added successfully");
+        const addedPizza = await Pizza.create({
+            name,
+            size,
+            img : uploaded.secure_url ,
+            price,
+        })
+
+        console.log("✅ Pizza added successfully=>", addedPizza);
         return(
             res.status(200).json(
                 {
                     success : true ,
                     message : "Pizza added successfully",
-
+                    addedPizza ,
                 }
             )
         )
