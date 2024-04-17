@@ -1,6 +1,6 @@
 const express = require('express');
 const dbConnect = require('./config/dbConnect');
-
+const cloudinaryConnect = require('./config/cloudinaryConnect');
 
 const app = express();
 
@@ -20,6 +20,7 @@ app.get("/", (req, res)=>{
 //=================================
 
 dbConnect();
+cloudinaryConnect();
 
 //=================================
 // 💙Middlewares -------------------------------------------------
@@ -28,9 +29,19 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const cors = require("cors");
 app.use(cors());
-
+const fileUpload = require("express-fileupload");
+app.use(
+	fileUpload({
+		useTempFiles:true,
+		tempFileDir:"/tmp",
+	})
+)
 
 
 //=============
 const userRoute = require("./routes/userRoute");
+const menuRoute = require("./routes/menuRoute");
+const bodyParser = require('body-parser');
+
 app.use("/user", userRoute);
+app.use("/menu", menuRoute);
