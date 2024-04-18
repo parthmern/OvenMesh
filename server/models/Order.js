@@ -12,17 +12,19 @@ const orderSchema = new mongoose.Schema({
         default : Date.now(),
     },
 
-    time: [{
-        status: {
-            type: String,
-            enum: ['placed', 'confirmation', 'preparation', 'outForDelivery', 'delivered'],
-            required: true 
-        },
-        updatedAt: {
-            type: Date,
-            default: Date.now()
+    time: [
+        {
+            status: {
+                type: String,
+                enum: ['placed', 'confirmation', 'preparation', 'outForDelivery', 'delivered'],
+                required: true 
+            },
+            updatedAt: {
+                type: Date,
+                default: Date.now()
+            }
         }
-    }],
+    ],
 
     address : {
         type : String ,

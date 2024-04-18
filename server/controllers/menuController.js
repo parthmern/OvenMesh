@@ -132,10 +132,29 @@ const gettingPizzaController = async (req, res) =>{
     }
 }
 
-
 // ======================================================
 // deleting pizza from Menu
+const deletingPizzaController = async (req, res) =>{
+    try{
 
+        const {pizzaId} = req.body ;
+        console.log
+
+
+    }
+    catch(error){
+        console.log("🚫 Deleting pizza error =>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false,
+                    message : "Pizza not deleted",
+                    error
+                }
+            )
+        )
+    }
+}
 
 
 

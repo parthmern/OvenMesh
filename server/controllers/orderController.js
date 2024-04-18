@@ -188,6 +188,35 @@ const updateOrderStatus = async(req, res) =>{
     }
 }
 
+// ====================================
+// cancelOrder
+const cancelOrder = async (req, res) =>{
+    try{
+
+        const {orderId} = req.body ;
+        console.log("orderId=>", orderId);
+
+        
+        if(!orderId){
+            return(
+                res.status(400).json(
+                    {
+                        success : false ,
+                        message : "orderId required",
+                    }
+                )
+            )
+        }
+
+        
+        
+
+    }
+    catch(error){
+        console.log("")
+    }
+}
+
 module.exports = {
     createOrder,
     updateOrderStatus
