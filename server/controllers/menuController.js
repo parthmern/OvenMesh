@@ -102,7 +102,7 @@ const gettingPizzaController = async (req, res) =>{
             }
         );
 
-        console.log("allPizzas=> ", allPizzas);
+        console.log("✅ allPizzas=> ", allPizzas);
 
         if(!allPizzas){
 
@@ -138,7 +138,37 @@ const deletingPizzaController = async (req, res) =>{
     try{
 
         const {pizzaId} = req.body ;
-        console.log
+        console.log("pizzaId=>", pizzaId);
+
+        const findingPizza = await Pizza.findById(pizzaId);
+
+        if(!findingPizza){
+            console.log("🚫 PizzaID not available")
+            return(
+                res.status(400).json(
+                    {
+                        success : false,
+                        message : "PizzaID not available",
+                    }
+                )
+            )
+        }
+
+        const deletedPizza = await Pizza.findByIdAndDelete(
+            pizzaId
+        );
+
+        console.log("✅ deleted Pizza successfully =>", deletedPizza);
+
+        return(
+            res.status(200).json(
+                {
+                    success : true, 
+                    message : "Deleted Pizza Successfully",
+                    deletedPizza,
+                }
+            )
+        )
 
 
     }
@@ -158,5 +188,5 @@ const deletingPizzaController = async (req, res) =>{
 
 
 
-module.exports = {pizzaAddingController, gettingPizzaController} ;
+module.exports = {pizzaAddingController, gettingPizzaController, deletingPizzaController} ;
 
