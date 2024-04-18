@@ -4,7 +4,8 @@ const Pizza = require("../models/Pizza");
 const User = require("../models/User");
 
 
-
+// ===================================
+// createOrder for first time
 const createOrder = async (req, res) =>{
 
     try{
@@ -33,8 +34,11 @@ const createOrder = async (req, res) =>{
             )
         }
 
-        const {address,status} = req.body ;
+        const {address} = req.body ;
         const pizzasIds = req.body.pizzas ;
+
+        // fixed
+        const status = "placed" ;
 
         console.log("userid, address, pizzaIds=>", userId, address, pizzasIds);
 
@@ -133,6 +137,56 @@ const createOrder = async (req, res) =>{
 
 }
 
+// ====================================
+// updating order status
+const updateOrderStatus = async(req, res) =>{
+    try{
+
+        const {orderId} = req.body ;
+        const {status} = req.body ;
+
+        // coming through isOrderExist or not MIDDLEWARE
+        // so no need to check
+
+        const updatedStatus = await Order.findByIdAndUpdate(
+            {_id : orderId},
+            {
+                status : status,
+            },
+            {
+                new : true ,
+            }
+        )
+
+        console.log("✅ Order status updated successfully");
+
+        return(
+            res.status(200).json(
+                {
+                    success : true ,
+                    message : "Order status updated successfully",
+                    updatedStatus ,
+                }
+            )
+        )
+        
+
+    }
+    catch(error){
+        console.log("🚫 updaing order status failed =>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false ,
+                    message : "Order status updation failed",
+                    error,
+                }
+            )
+        )
+    }
+}
+
 module.exports = {
-    createOrder 
+    createOrder,
+    updateOrderStatus
 };

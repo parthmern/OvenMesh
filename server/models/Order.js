@@ -34,10 +34,11 @@ const orderSchema = new mongoose.Schema({
 });
 
 // Middleware to update the time array when status is updated
-orderSchema.pre('save', function (next) {
-    if (this.isModified('status')) {
-        // Push the current time to the time array
-        this.time.push(new Date());
+orderSchema.pre('findOneAndUpdate', function (next) {
+    const updatedFields = this.getUpdate();
+    if (updatedFields && updatedFields.status) {
+        console.log("Status updating =>", updatedFields.status);
+        this.updateOne({ $push: { time: new Date() } });
     }
     next();
 });
