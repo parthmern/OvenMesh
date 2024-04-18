@@ -92,7 +92,15 @@ const pizzaAddingController = async (req, res) =>{
 const gettingPizzaController = async (req, res) =>{
     try{
 
-        const allPizzas = await Pizza.find({});
+        const allPizzas = await Pizza.find(
+            {},
+            {
+                name : true,
+                price : true,
+                img : true, 
+                size : true,
+            }
+        );
 
         console.log("allPizzas=> ", allPizzas);
 
@@ -123,6 +131,13 @@ const gettingPizzaController = async (req, res) =>{
         )
     }
 }
+
+
+// ======================================================
+// deleting pizza from Menu
+
+
+
 
 module.exports = {pizzaAddingController, gettingPizzaController} ;
 

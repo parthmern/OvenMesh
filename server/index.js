@@ -41,7 +41,9 @@ app.use(
 //=============
 const userRoute = require("./routes/userRoute");
 const menuRoute = require("./routes/menuRoute");
-const bodyParser = require('body-parser');
+const orderRoute = require("./routes/orderRoute");
 
 app.use("/user", userRoute);
 app.use("/menu", menuRoute);
+app.use("/order", orderRoute);
+
