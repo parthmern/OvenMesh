@@ -31,7 +31,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <div>
-                        
+                        {user?.name}
                     </div>
                 )
             }
