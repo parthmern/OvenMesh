@@ -9,6 +9,8 @@ const Navbar = () => {
     const {user, loading} = useSelector((state)=>state.profile);
     console.log( {user, loading});
 
+    console.log("redux nav user=>", user);
+
 
   return (
     <div className='w-[100%] flex items-center justify-between'>

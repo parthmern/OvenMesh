@@ -2,8 +2,11 @@ import React, { useEffect } from 'react'
 import Navbar from '../components/common/Navbar';
 import { apiConnector } from '../services/apiConnector';
 import { allPizza, menu, url } from '../services/paths';
+import { useSelector } from 'react-redux';
 
 const HomePage = () => {
+
+    const {user} = useSelector((state)=> state.profile) ;
 
     useEffect(()=>{
         async function gettingAllPizzas (){

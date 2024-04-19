@@ -7,13 +7,23 @@ import InputWithLabelPass from '../components/ui/InputWithLabelPass';
 import { apiConnector } from '../services/apiConnector';
 import { login, url, user } from '../services/paths';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../toolkit/slices/profileSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const LoginPage = () => {
 
+  const dispatch = useDispatch();
+
+  const {user:s} = useSelector((state)=> state.profile);
+  console.log("redux user", s);
+
   const [email,setEmail] = useState(null);
-  const [password,setPassword] = useState(null);
+  const [password,setPassword] = useState(null); 
+
+  const navigate = useNavigate();
 
   
 
@@ -36,8 +46,13 @@ const LoginPage = () => {
       localStorage.setItem("token", JSON.stringify(response.data.cookies.token));
       localStorage.setItem("user", JSON.stringify(response.data.findingUser));
 
-      toast.success("Login Successful")
+      
 
+      toast.success("Login Successful");
+
+      dispatch(setUser(response.data.findingUser));
+
+      navigate("/")
       
 
     }
@@ -47,6 +62,7 @@ const LoginPage = () => {
     }
 
     toast.dismiss(toastId);
+
 
   }
 
