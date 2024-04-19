@@ -112,6 +112,19 @@ const loginController = async (req, res) =>{
             )
         }
 
+        const passMatch = await bcrypt.compare(password, findingUser.password );
+        if(!passMatch){
+            console.log('🚫 Password not matched');
+            return(
+                res.status(400).json(
+                    {
+                        success : false,
+                        message : "Password not matched",
+                    }
+                )
+            )
+        }
+
         const tokenData = {
             id : findingUser?._id, 
             name : findingUser?.name,
@@ -131,13 +144,14 @@ const loginController = async (req, res) =>{
         );
 
         const cookies = {
-            findingUser,
             token : jwtToken,
         };
 
         const cookiesOptions = {
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires after 24 hours
             httpOnly: true,
+            sameSite: "none",
+            secure: true,
         };
 
         console.log("✅ loginUser success=>", findingUser, cookies);
