@@ -17,14 +17,16 @@ const HomePage = () => {
             
         }
         gettingAllPizzas();
-    }, [])
+    }, []);
 
   return (
-    <div >
+
+    <div>
 
         <Navbar />
 
     </div>
+
   )
 }
 
