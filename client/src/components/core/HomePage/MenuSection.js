@@ -1,8 +1,13 @@
 import React from "react";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../toolkit/slices/cartSlice";
 
 const MenuSection = ({ pizzas }) => {
+
+    const dispatch = useDispatch();
+
   return (
     <div className="p-6 ">
       <div className="text-center my-5">
@@ -41,7 +46,9 @@ const MenuSection = ({ pizzas }) => {
                 </p>
                 <div className="flex items-center justify-between">
                     <p className="text-lg font-semibold">${pizza?.price}</p>
-                    <Button >Add to Cart</Button>
+                    <Button onClick={()=>{
+                        dispatch(addToCart(pizza));
+                    }} >Add to Cart</Button>
                 </div>
                 
               </div>
