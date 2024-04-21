@@ -43,11 +43,14 @@ const LoginPage = () => {
       const response = await apiConnector("POST", url + user + login, {email, password}, config );
       console.log("res=>", response);
 
+      if (!response.data.success) {
+        throw new Error(response.data.message)
+      }
+
       localStorage.setItem("token", JSON.stringify(response.data.cookies.token));
       localStorage.setItem("user", JSON.stringify(response.data.findingUser));
 
       
-
       toast.success("Login Successful");
 
       dispatch(setUser(response.data.findingUser));
@@ -58,7 +61,7 @@ const LoginPage = () => {
     }
     catch(error){
       console.log("error=>", error);
-      toast.error("Login Failed")
+      toast.error(error?.response?.data?.message || "server error");
     }
 
     toast.dismiss(toastId);
