@@ -35,10 +35,10 @@ const LoginPage = () => {
     try{
       
       const config = {
-        headers: {
-          "Content-Type": "application/json"
-          },
-          withCredentials: true
+        
+          "Content-Type": "application/json",
+          
+          "withCredentials": true
         }
       const response = await apiConnector("POST", url + user + login, {email, password}, config );
       console.log("res=>", response);
@@ -49,6 +49,17 @@ const LoginPage = () => {
 
       localStorage.setItem("token", JSON.stringify(response.data.cookies.token));
       localStorage.setItem("user", JSON.stringify(response.data.findingUser));
+
+      // Function to set a cookie
+					function setCookie(name, value, days) {
+						const twentyFourHours = 24 * 60 * 60 * 1000;
+  					const expires = new Date(Date.now() + twentyFourHours).toUTCString();
+						
+						document.cookie = `${name}=${value}; expires=${expires}; path=/`;
+					}
+  
+			// Usage example
+			setCookie('token',JSON.stringify(response.data.cookies.token)); // Sets a cookie named 'myCookie' that expires in 7 days
 
       
       toast.success("Login Successful");

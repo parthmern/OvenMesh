@@ -1,11 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../components/ui/button";
+import InputWithLabelEmail from "../components/ui/InputWithLabelEmail";
+import toast from "react-hot-toast";
+import { apiConnector } from "../services/apiConnector";
+import { createOrder, order, url } from "../services/paths";
 
 const CartPage = () => {
+
+  const [address, setAddress] = useState();
+
   const { cart, total, totalItem } = useSelector((state) => state.cart);
+  const { user } = useSelector((state)=> state.profile) ;
+
+  const token = JSON.parse(localStorage.getItem("token"));
+  console.log("token->", token);
+
+  //console.log("add=>", address);
 
   console.log("🛒 cart=>", cart);
+
+
+  const orderHandler = async () => {
+
+    if(!address){
+      toast.error("Enter address");
+      return ;
+    }
+
+    
+
+    try{
+
+      const pizzas = [] ;
+
+      for (const pizza of cart){
+        console.log("id->", pizza?._id);
+        pizzas.push(pizza?._id);
+      }
+      
+
+      const orderDetails = {
+        pizzas : pizzas ,
+        address : address ,
+        status : "placed",
+      }
+
+      const config = {
+        
+        'Authorization': `Bearer ${token}` ,
+
+        
+        
+      };
+
+      const response = await apiConnector( "POST",url+order+createOrder, orderDetails, config);
+      console.log("response->", response);
+      
+    }
+    catch(error){
+      console.log("error->", error);
+    }
+
+  }
+
 
   return (
     <div className="container py-4">
@@ -33,7 +91,7 @@ const CartPage = () => {
                       </div>
                     </div>
 
-                    <div>${pizza?.price}</div>
+                    <div className="font-medium">${pizza?.price}</div>
                   </div>
                 </div>
               );
@@ -51,7 +109,13 @@ const CartPage = () => {
               <p className="text-lg font-medium">Total</p>
               <p className="text-lg font-medium">${total}</p>
             </div>
-            <Button className="w-full">Proceed to Checkout</Button>
+
+            <div className="py-4">
+              <InputWithLabelEmail className='py-5' setEmail={setAddress} name={"Enter delivery address"} type={"text"} placeholder={"Enter address"} />
+            </div>
+            
+
+            <Button onClick={orderHandler} className="w-full">Proceed to Checkout</Button>
           </div>
         </div>
       ) : (

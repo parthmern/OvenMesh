@@ -39,7 +39,7 @@ const Navbar = () => {
                 ) : (
                     <div className='flex items-center justify-center gap-x-3'>
                         <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" />
+                            <AvatarImage src="" />
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <Badge className={"capitalize cursor-default "} variant="default">{user?.name}</Badge>
