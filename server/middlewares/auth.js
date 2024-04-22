@@ -9,9 +9,10 @@ const auth = async (req, res, next) =>{
         console.log("body", req.body ? req.body.token : null);
 
         const headerToken = req.header("Authorization");
+        console.log("headerToken => ", headerToken);
         const token = req.body?.token || req.cookies?.token?.token || (headerToken ? headerToken.replace("Bearer ", "") : null);
 
-        console.log("fetched token=>", token);
+        console.log("Fetching token=>", token);
         
 
         if(!token){

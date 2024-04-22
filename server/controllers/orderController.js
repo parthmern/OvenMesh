@@ -220,7 +220,109 @@ const cancelOrder = async (req, res) =>{
     }
 }
 
+// ====================================
+const getAllOrders = async (req, res) =>{
+
+    try{
+
+        const {id : userId} = req.body.user ;
+
+        if(!userId){
+            console.log(" 🚫 User Id is not available");
+            return(
+                res.status(400).json({
+                    success : false, 
+                    message : "User Id is not available",
+                })
+            )
+        }
+
+        const isUserAvailable = await User.findById(userId).populate("orders");
+
+        console.log("isUserAvailable=>", isUserAvailable);
+
+        return(
+            res.status(200).json(
+                {
+                    success : true ,
+                    message : "Orders fetched successfully",
+                    isUserAvailable ,
+                }
+            )
+        )
+
+
+
+        
+
+    }
+    catch(error){
+        console.log("🚫 getAll orders failed =>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false,
+                    message : "Getting all orders failed",
+                    error,
+                }
+            )
+        )
+    }
+}
+
+const getOrderDetail = async (req, res)=>{
+    try{
+
+        const {orderId} = req.body ;
+
+        console.log("order id->", orderId);
+
+        const orderDetail = await Order.findById(orderId).populate("pizzas");
+
+        console.log("order details->",orderDetail);
+
+        if(!orderDetail){
+            console.log("🚫 order detail not found");
+            return(
+                res.status(400).json(
+                    {
+                        success : false,
+                        message : "order detail not found"
+                    }
+                )
+            )
+        }
+
+        return(
+            res.status(200).json(
+                {
+                    success : true ,
+                    message : "Order details founded",
+                    orderDetail ,
+                }
+            )
+        )
+
+
+    }
+    catch(error){
+        console.log("🚫 getOrderDetails error=>", error);
+        return(
+            res.status(500).json(
+                {
+                    success : false,
+                    message : "Failed to Get order details",
+                    error,
+                }
+            )
+        )
+    }
+}
+
+
 module.exports = {
     createOrder,
-    updateOrderStatus
+    updateOrderStatus,
+    getAllOrders,
+    getOrderDetail
 };

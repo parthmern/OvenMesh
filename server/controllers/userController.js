@@ -148,10 +148,11 @@ const loginController = async (req, res) =>{
         };
 
         const cookiesOptions = {
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires after 24 hours
-            httpOnly: true,
+            maxAge: new Date(Date.now() + 24 * 60 * 60 * 1000), // Expires after 24 hours
+            httpOnly: false,
             sameSite: "none",
             secure: true,
+            path : "/"
         };
 
         console.log("✅ loginUser success=>", findingUser, cookies);

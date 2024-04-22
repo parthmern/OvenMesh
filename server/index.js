@@ -30,7 +30,7 @@ app.use(cookieParser());
 const cors = require("cors");
 app.use(cors({
     origin: '*',
-    credentials: true,
+    //credentials: true,
 }));
 const fileUpload = require("express-fileupload");
 app.use(
