@@ -13,6 +13,7 @@ const createOrder = async (req, res) =>{
         const {userId} = req.body ;
 
         if(!userId){
+            console.log(" 🚫 User Id is not available");
             return(
                 res.status(400).json({
                     success : false, 

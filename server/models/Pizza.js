@@ -16,7 +16,7 @@ const pizzaSchema = new mongoose.Schema({
 
     size : {
         type: String,
-        enum: ['small', 'medium', 'large'],
+        
     },
 
 })
