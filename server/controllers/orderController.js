@@ -10,7 +10,9 @@ const createOrder = async (req, res) =>{
 
     try{
 
-        const {userId} = req.body ;
+        console.log("req.body.user=>", req.body.user);
+
+        const {id : userId} = req.body.user ;
 
         if(!userId){
             console.log(" 🚫 User Id is not available");

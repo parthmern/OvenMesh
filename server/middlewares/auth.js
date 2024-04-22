@@ -2,13 +2,17 @@ const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) =>{
     try{
-        const token = req.cookies.token 
-                    || req.body.token 
-                    || req.header("Authorization").replace("Bearer ", "");
 
-        console.log("req.cookies.token->", req.cookies.token);
-        console.log("req.body.token  ->", req.body.token );
-        console.log("req.header->", req.header("Authorization").replace("Bearer ", ""));
+        console.log("=============================");
+        console.log("checked all cookies", req.cookies);
+        console.log("cokkie", req.cookies ? req.cookies.token : null);
+        console.log("body", req.body ? req.body.token : null);
+
+        const headerToken = req.header("Authorization");
+        const token = req.body?.token || req.cookies?.token?.token || (headerToken ? headerToken.replace("Bearer ", "") : null);
+
+        console.log("fetched token=>", token);
+        
 
         if(!token){
             console.log("🚫 Token is not available");
@@ -28,7 +32,7 @@ const auth = async (req, res, next) =>{
             const decode = await jwt.verify(token, "parthmern");
 
             console.log("decode==>", decode);
-            req.user = decode;
+            req.body.user = decode;
 
         }
         catch(error){
