@@ -2,6 +2,8 @@ const { default: mongoose } = require("mongoose");
 const Order = require("../models/Order");
 const Pizza = require("../models/Pizza");
 const User = require("../models/User");
+const io = require("..");
+
 
 
 // ===================================
@@ -164,6 +166,8 @@ const updateOrderStatus = async(req, res) =>{
         )
 
         console.log("✅ Order status updated successfully");
+
+        io.to(orderId).emit('updateOrderStatus', updatedStatus?.status);
 
         return(
             res.status(200).json(
