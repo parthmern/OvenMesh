@@ -167,7 +167,10 @@ const updateOrderStatus = async(req, res) =>{
 
         console.log("✅ Order status updated successfully");
 
-        io.to(orderId).emit('updateOrderStatus', updatedStatus?.status);
+        io.to(orderId).emit('updateOrderStatus', {
+            status : updatedStatus?.status ,
+            time : updatedStatus?.time ,
+        });
 
         return(
             res.status(200).json(
