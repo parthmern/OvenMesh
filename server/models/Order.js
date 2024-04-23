@@ -34,6 +34,10 @@ const orderSchema = new mongoose.Schema({
         type : Number ,
     },
 
+    phoneNum : {
+        type : Number
+    },
+
     pizzas : [
         {
 			type: mongoose.Schema.Types.ObjectId,

@@ -9,6 +9,7 @@ import { createOrder, order, url } from "../services/paths";
 const CartPage = () => {
 
   const [address, setAddress] = useState();
+  const [phoneNum, setPhoneNum] = useState();
 
   const { cart, total, totalItem } = useSelector((state) => state.cart);
   const { user } = useSelector((state)=> state.profile) ;
@@ -23,8 +24,8 @@ const CartPage = () => {
 
   const orderHandler = async () => {
 
-    if(!address){
-      toast.error("Enter address");
+    if(!address || !phoneNum){
+      toast.error("Enter address and phone number");
       return ;
     }
 
@@ -44,6 +45,7 @@ const CartPage = () => {
         pizzas : pizzas ,
         address : address ,
         status : "placed",
+        phoneNum : phoneNum ,
       }
 
       const config = {
@@ -110,7 +112,8 @@ const CartPage = () => {
               <p className="text-lg font-medium">${total}</p>
             </div>
 
-            <div className="py-4">
+            <div className="py-4 flex  flex-col gap-y-3">
+              <InputWithLabelEmail className='py-5 pb-3' setPhoneNum={setPhoneNum} name={"Enter Phone Number"} type={"text"} placeholder={"Enter Phone Number"} />
               <InputWithLabelEmail className='py-5' setEmail={setAddress} name={"Enter delivery address"} type={"text"} placeholder={"Enter address"} />
             </div>
             
