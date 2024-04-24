@@ -81,7 +81,7 @@ const LoginPage = () => {
   }
 
   return (
-    <div className='md:w-[30%] h-[90vh] w-[50%] mx-auto gap-y-5 flex flex-col items-center justify-center top-10 mt-10'>
+    <div className='md:w-[30%] h-[90vh] w-[50%] mx-auto gap-y-5 flex flex-col items-center justify-center '>
 
         <div className='lexend-font text-4xl mb-5'>
           LOGIN 

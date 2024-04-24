@@ -28,9 +28,9 @@ const HomePage = () => {
 
   return (
 
-    <div>
+    <div className=' pt-14'>
 
-        <Navbar />
+        
 
         <MenuSection pizzas={pizzas}  />
 

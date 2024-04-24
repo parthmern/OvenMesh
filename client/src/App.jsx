@@ -8,14 +8,19 @@ import MyOrder from "./pages/MyOrder";
 import OrderDetails from "./pages/OrderDetails";
 import {io} from "socket.io-client"
 import { useEffect, useMemo, useState } from "react";
+import Navbar from "./components/common/Navbar";
 
 function App() {
 
   
 
   return (
+
+    <>
     
+    <Navbar />
     <Routes>
+      
       <Route path="/" element={<HomePage/>} ></Route>
       <Route path="/login" element={<LoginPage/>}></Route>
       <Route path="/signup" element={<SignupPage/>}></Route>
@@ -23,7 +28,8 @@ function App() {
       <Route path="/myorder" element={<MyOrder />}></Route>
       <Route path="/order/:id" element={<OrderDetails />}></Route>
     </Routes>
-
+    </>
+    
   );
 }
 

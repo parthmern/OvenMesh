@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { ShoppingCart } from 'lucide-react';
-
+import { Microwave } from 'lucide-react';
 
 const Navbar = () => {
 
@@ -20,7 +20,8 @@ const Navbar = () => {
   return (
     <div className='w-[100%] fixed z-50 blur-effect px-3 h-[50px] border-b-2 flex items-center justify-between'>
         
-        <div>
+        <div onClick={()=>{navigate("/")}} className='akira cursor-pointer flex items-center gap-x-2' >
+            <Microwave />
             OvenMesh
         </div>
 

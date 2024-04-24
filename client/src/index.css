@@ -17,7 +17,7 @@
 
 
   .blur-effect{
-    /* From https://css.glass */
+   
 background: rgba(255, 255, 255, 0.07);
 
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -36,6 +36,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .tracking-tight{
   letter-spacing: -0.025em;
+}
+
+@font-face {
+  font-family: "Akira";
+  src: url("../src/assets/fonts/akira_expanded/Akira\ Expanded\ Demo.otf") ;
+}
+
+.akira{
+  font-family: 'Akira', Courier, monospace;
 }
   
 
