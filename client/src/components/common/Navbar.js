@@ -18,7 +18,7 @@ const Navbar = () => {
 
 
   return (
-    <div className='w-[100%] px-3 h-[50px] border-b-2 flex items-center justify-between'>
+    <div className='w-[100%] fixed z-50 blur-effect px-3 h-[50px] border-b-2 flex items-center justify-between'>
         
         <div>
             OvenMesh
@@ -43,7 +43,12 @@ const Navbar = () => {
                             <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <Badge className={"capitalize cursor-default "} variant="default">{user?.name}</Badge>
+
+                        <Badge onClick={()=>{navigate("/myorder")}} className={"cursor-pointer "} variant="secondary">My orders</Badge>
+
                         <ShoppingCart onClick={()=> {navigate("/cart")}} className='ml-4 cursor-pointer ' />
+
+                        
                     </div>
                 )
             }

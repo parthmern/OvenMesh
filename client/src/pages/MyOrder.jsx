@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { apiConnector } from "../services/apiConnector";
 import { order, url } from "../services/paths";
 import OrderTable from "../components/core/myorderPage/OrderTable";
+import toast from "react-hot-toast";
 
 const MyOrder = () => {
   const [orders, setOrders] = useState();
@@ -15,6 +16,7 @@ const MyOrder = () => {
         Authorization: `Bearer ${token}`,
       };
 
+      //toast.loading("creating order ...");
       try {
         const res = await apiConnector("GET", url + order + "getAllOrder", "",config);
         console.log("res", res?.data?.isUserAvailable?.orders);

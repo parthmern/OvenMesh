@@ -5,8 +5,11 @@ import InputWithLabelEmail from "../components/ui/InputWithLabelEmail";
 import toast from "react-hot-toast";
 import { apiConnector } from "../services/apiConnector";
 import { createOrder, order, url } from "../services/paths";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+
+  const navigate = useNavigate(); 
 
   const [address, setAddress] = useState();
   const [phoneNum, setPhoneNum] = useState();
@@ -30,7 +33,7 @@ const CartPage = () => {
     }
 
     
-
+    const toastId = toast.loading("Creating order ...");
     try{
 
       const pizzas = [] ;
@@ -51,18 +54,22 @@ const CartPage = () => {
       const config = {
         
         'Authorization': `Bearer ${token}` ,
-
-        
-        
+    
       };
 
       const response = await apiConnector( "POST",url+order+createOrder, orderDetails, config);
       console.log("response->", response);
-      
+
+      toast.success("Order created Successful");
+      navigate("/myorder");
+
     }
     catch(error){
       console.log("error->", error);
+      toast.error(error?.response?.data?.message || "server error");
     }
+
+    toast.dismiss(toastId);
 
   }
 
