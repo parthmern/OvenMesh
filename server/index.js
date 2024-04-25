@@ -84,9 +84,10 @@ app.use(
 const userRoute = require("./routes/userRoute");
 const menuRoute = require("./routes/menuRoute");
 const orderRoute = require("./routes/orderRoute");
+const adminRoute = require("./routes/adminRoute");
 
 
 app.use("/user", userRoute);
 app.use("/menu", menuRoute);
 app.use("/order", orderRoute);
-
+app.use("/admin", adminRoute);

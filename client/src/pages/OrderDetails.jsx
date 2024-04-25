@@ -108,7 +108,7 @@ const OrderDetails = () => {
 
 
   return (
-    <div className="p-5 flex flex-col w-full">
+    <div className="p-5 pt-16 flex flex-col w-full">
         {/* <p>{detail?.status}{orderStatus}</p> */}
 
 

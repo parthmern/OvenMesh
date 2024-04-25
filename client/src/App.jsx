@@ -9,6 +9,7 @@ import OrderDetails from "./pages/OrderDetails";
 import {io} from "socket.io-client"
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "./components/common/Navbar";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Route path="/cart" element={<CartPage />}></Route>
       <Route path="/myorder" element={<MyOrder />}></Route>
       <Route path="/order/:id" element={<OrderDetails />}></Route>
+      <Route path="/admin" element={<AdminPage />}></Route>
     </Routes>
     </>
     

@@ -1,12 +1,14 @@
 import React from "react";
 import { Badge } from "../../ui/badge";
 import { Button } from "../../ui/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../../toolkit/slices/cartSlice";
+import toast from "react-hot-toast";
 
 const MenuSection = ({ pizzas }) => {
 
     const dispatch = useDispatch();
+    const {user} = useSelector((state)=>state.profile);
 
   return (
     <div className="p-6 ">
@@ -20,11 +22,11 @@ const MenuSection = ({ pizzas }) => {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-y-4 items-center justify-center gap-x-5">
+      <div className="flex  flex-wrap gap-y-4 items-center justify-center gap-x-5">
         {pizzas?.map((pizza) => {
           return (
-            <div className="group relative rounded-lg border  border-gray-200 bg-white p-4 shadow-sm transition-all hover:border-gray-300 dark:border-gray-800 dark:bg-gray-950">
-              <div className="aspect-[4/3] overflow-hidden rounded-lg">
+            <div className="group flex flex-col  justify-between w-[400px] h-[450px] relative rounded-lg border  border-gray-200 bg-white p-4 shadow-sm transition-all hover:border-gray-300 dark:border-gray-800 dark:bg-gray-950">
+              <div className="aspect-[4/3]  overflow-hidden rounded-lg">
                 <img
                   alt="Margherita Pizza"
                   className="h-[300px] w-full object-cover transition-all group-hover:scale-105"
@@ -44,10 +46,15 @@ const MenuSection = ({ pizzas }) => {
                 <p className="text-sm capitalize font-semibold text-gray-500 dark:text-gray-400">
                   {pizza?.size}
                 </p>
-                <div className="flex items-center justify-between">
+                <div className="flex mt-3 items-center justify-between">
                     <p className="text-lg font-semibold">${pizza?.price}</p>
                     <Button onClick={()=>{
-                        dispatch(addToCart(pizza));
+                        if(!user){
+                          toast.error("Login First");
+                        }
+                        else{
+                          dispatch(addToCart(pizza));
+                        }
                     }} >Add to Cart</Button>
                 </div>
                 
