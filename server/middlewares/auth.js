@@ -1,3 +1,4 @@
+const e = require("express");
 const jwt = require("jsonwebtoken");
 
 const auth = async (req, res, next) =>{
@@ -69,4 +70,45 @@ const auth = async (req, res, next) =>{
     }
 }
 
-module.exports =  {auth} ;
+
+const isAdmin = async (req, res, next) =>{
+    try{
+
+        console.log("checking isAdmin");
+
+        const {_id:id, name, email} = req.body ;
+
+        // not goood way
+        // i have to make different schema and then verify it from that schema's email ids
+        // i should create a new admin schema and then i have to match the userID of this request and the userId of admin which is in schema
+        if(name !== 'admin' || email !== 'admin@gmail.com'){
+            console.log("🚫 you are not admin");
+            return(
+                res.status(400).json(
+                    {
+                        success : false,
+                        message : "You are not admin" ,
+                    }
+                )
+            )
+        }
+        else{
+            next();
+        }
+
+
+    }
+    catch(error){
+        console.log("🚫 isAdmin error");
+        return(
+            res.status(500).json({
+                success : false, 
+                message : "Error in isAdmin",
+                error ,
+            })
+        )
+
+    }
+}
+
+module.exports =  {auth, isAdmin} ;
