@@ -113,6 +113,48 @@ const createOrder = async (req, res) =>{
 
         console.log("✅ addingOrderIdToUser =>", addingOrderIdToUser);
 
+        // ================================================================
+        
+        const allUser = await User.find({}).populate({
+            path: 'orders',
+            populate: {
+                path: 'pizzas'
+            }
+        });
+        
+
+        //console.log("all user->", allUser);
+
+        const liveOrder = allUser.map((user)=>{
+            console.log(user.orders.filter((order)=>{
+                return(
+                    order?.status !== 'delivered'
+                )
+            }));
+            return(
+                user.orders.filter((order)=>{
+                    return(
+                        order?.status !== 'delivered'
+                    )
+                })
+            )
+        });
+
+        const filteredOrders = allUser.reduce((accumulator, user) => {
+            const filteredUserOrders = user.orders.filter(order => order.status !== "delivered");
+            if (filteredUserOrders.length > 0) {
+                accumulator.push({ user: user.name, orders: filteredUserOrders });
+            }
+            return accumulator;
+        }, []);
+        
+        //console.log(filteredOrders);
+
+        io.to("admin").emit('newOrderCreated', filteredOrders);
+
+        // =================================================================
+
+
         return(
             res.status(200).json(
                 {

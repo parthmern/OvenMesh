@@ -36,6 +36,13 @@ io.on('connection', (socket) => {
     });
 
     //socket.join('room1');
+
+
+    socket.on("adminJoined", (data)=>{
+        console.log(" ❤ 🧡 💛 💚 💙 💜  Admin joined->", data);
+        socket.join(data);
+    })
+
 });
 
 module.exports = io;

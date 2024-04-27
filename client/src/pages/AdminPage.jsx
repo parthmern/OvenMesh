@@ -1,18 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { apiConnector } from "../services/apiConnector";
 import { admin, order, url } from "../services/paths";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { SelectDemo } from "../components/core/adminPage/SelectDemo";
+import { io } from "socket.io-client";
 
 const AdminPage = () => {
   const { user } = useSelector((state) => state.profile);
 
 
-  function onStatusChnage(){
+  //=======================================================================
 
-  }
+  const [socketId, setSocketId] = useState();
+
+  const socket = useMemo(() => {
+    return io(url);
+  }, []);
+
+  useEffect(() => {
+    console.log("use effect run");
+    socket.on("connect", () => {
+      console.log("✨✨✨✨✨ADMIN - connected with id", socket.id);
+      setSocketId(socket.id);
+
+      socket.emit("adminJoined", "admin");
+
+    });
+
+    // receving emitted from server
+    socket.on("newOrderCreated", (data) => {
+      console.log("✨🔌 receving newOrderCreated from server ", data);
+      setLiveOrders(data);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  //=======================================================================
+
 
   const [liveOrders, setLiveOrders] = useState();
 

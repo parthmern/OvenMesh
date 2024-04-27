@@ -23,7 +23,7 @@ const OrderDetails = () => {
   const [socketId, setSocketId] = useState();
 
   const socket = useMemo(() => {
-    return io("http://localhost:4000");
+    return io(url);
   }, []);
 
   useEffect(() => {
@@ -42,8 +42,6 @@ const OrderDetails = () => {
       setOrderStatus(data?.status);
       setOrderTime(data?.time);
     });
-
-
 
     return () => {
       socket.disconnect();
