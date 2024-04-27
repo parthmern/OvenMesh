@@ -4,9 +4,15 @@ import { admin, order, url } from "../services/paths";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { SelectDemo } from "../components/core/adminPage/SelectDemo";
 
 const AdminPage = () => {
   const { user } = useSelector((state) => state.profile);
+
+
+  function onStatusChnage(){
+
+  }
 
   const [liveOrders, setLiveOrders] = useState();
 
@@ -59,7 +65,11 @@ const AdminPage = () => {
           <div className="border-r-2 pr-5 w-[200px] ">{order?.address}</div>
 
           <div className="border-r-2 pr-5 w-[100px] ">${order?.totalCost}</div>
-          
+
+          <div>
+            <SelectDemo id={order?._id} order={order} />
+          </div>
+
 
         </div>
       );
