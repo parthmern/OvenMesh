@@ -19,26 +19,26 @@ const AdminPage = () => {
     return io(url);
   }, []);
 
-  useEffect(() => {
-    console.log("use effect run");
-    socket.on("connect", () => {
-      console.log("✨✨✨✨✨ADMIN - connected with id", socket.id);
-      setSocketId(socket.id);
+  // useEffect(() => {
+  //   console.log("use effect run");
+  //   socket.on("connect", () => {
+  //     console.log("✨✨✨✨✨ADMIN - connected with id", socket.id);
+  //     setSocketId(socket.id);
 
-      socket.emit("adminJoined", "admin");
+  //     socket.emit("adminJoined", "admin");
 
-    });
+  //   });
 
-    // receving emitted from server
-    socket.on("newOrderCreated", (data) => {
-      console.log("✨🔌 receving newOrderCreated from server ", data);
-      setLiveOrders(data);
-    });
+  //   // receving emitted from server
+  //   socket.on("newOrderCreated", (data) => {
+  //     console.log("✨🔌 receving newOrderCreated from server ", data);
+  //     setLiveOrders(data);
+  //   });
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   //=======================================================================
 
@@ -47,7 +47,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     async function fetchOrder() {
-      const toastId = toast.loading("Fetching live orders");
+      var toastId = toast.loading("Fetching live orders");
       try {
         const res = await apiConnector(
           "POST",
@@ -57,14 +57,48 @@ const AdminPage = () => {
         console.log("res->", res?.data?.filteredOrders);
         setLiveOrders(res?.data?.filteredOrders);
         toast.success("Order fetched successfully");
+        toast.dismiss(toastId);
+        return true ;
       } catch (error) {
         console.log("error", error);
         toast.error("Order fetching failed");
+        toast.dismiss(toastId);
+        return false ;
       }
-      toast.dismiss(toastId);
+      
     }
 
-    fetchOrder();
+    async function socketConnection(){
+      const valid = await fetchOrder();
+    console.log("valid->", valid);
+
+    if(valid){
+      socket.on("connect", () => {
+        console.log("✨✨✨✨✨ADMIN - connected with id", socket.id);
+        setSocketId(socket.id);
+  
+        socket.emit("adminJoined", "admin");
+  
+      });
+  
+      // receving emitted from server
+      socket.on("newOrderCreated", (data) => {
+        console.log("✨🔌 receving newOrderCreated from server ", data);
+        setLiveOrders(data);
+      });
+  
+      return () => {
+        socket.disconnect();
+      };
+    }
+    }
+
+    socketConnection();
+    
+
+
+
+
   }, []);
 
   function arrangingOrder(user, orders) {
@@ -72,19 +106,18 @@ const AdminPage = () => {
 
     return orders?.map((order) => {
       return (
-        <div className="flex gap-x-5 border p-3">
-          <div className="flex flex-col border-r-2 pr-5">
+        <div key={order?._id} className="flex gap-x-5 border p-3">
+          <div className="flex flex-col w-[300px] border-r-2 pr-5">
             <p>{order?._id}</p>
             <p className="text-black font-semibold">{user}</p>
           </div>
 
-          <div className="flex w-[200px] flex-col border-r-2 pr-5">
+          <div className="flex w-[220px] flex-col border-r-2 pr-5">
             {order?.pizzas?.map((pizza) => {
               return (
-                <>
+                <div key={pizza?._id} className={pizza?._id}>
                   <p>{pizza?.name}</p>
-                  
-                </>
+                </div>
               );
             })}
           </div>
@@ -95,7 +128,7 @@ const AdminPage = () => {
 
           <div className="border-r-2 pr-5 w-[100px] ">${order?.totalCost}</div>
 
-          <div>
+          <div className="w-[300px]">
             <SelectDemo id={order?._id} order={order} />
           </div>
 

@@ -10,6 +10,7 @@ import {io} from "socket.io-client"
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "./components/common/Navbar";
 import AdminPage from "./pages/AdminPage";
+import AdminPizza from "./pages/AdminPizza";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
       <Route path="/myorder" element={<MyOrder />}></Route>
       <Route path="/order/:id" element={<OrderDetails />}></Route>
       <Route path="/admin" element={<AdminPage />}></Route>
+      <Route path="/admin/pizza" element={<AdminPizza />}></Route>
     </Routes>
     </>
     
