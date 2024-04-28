@@ -68,13 +68,16 @@ cloudinaryConnect();
 
 //=================================
 // 💙Middlewares -------------------------------------------------
+const bodyParser = require("body-parser");
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const cors = require("cors");
 app.use(cors({
     origin: '*',
-    //credentials: true,
+    credentials: true,
 }));
 const fileUpload = require("express-fileupload");
 app.use(

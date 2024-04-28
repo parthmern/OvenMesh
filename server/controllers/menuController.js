@@ -21,8 +21,8 @@ const pizzaAddingController = async (req, res) =>{
         console.log("pizzaAddingController=>", req.body);
         const {name, price, size} = req.body ;
         console.log("name, price, size=>", name, price, size);
-
-        const file = req.files.imageFile;
+        console.log("req.files=>", req.files, req.body.imageFile);
+        const file = req.files.imageFile || req.body.imageFile;
 
         if(!file){
             return(
