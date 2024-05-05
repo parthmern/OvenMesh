@@ -6,12 +6,30 @@ import toast from "react-hot-toast";
 
 const MyOrder = () => {
   const [orders, setOrders] = useState();
+  const [loading, setLoading] = useState(false) ;
 
-  const token = JSON.parse(localStorage.getItem("token"));
+
+  function getWithExpiry(key) {
+    const itemString = localStorage.getItem(key);
+    if (!itemString) {
+        return null;
+    }
+    const item = JSON.parse(itemString);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+    }
+    return item.value;
+}
+
+  const token = getWithExpiry("token");
   console.log("token->", token);
 
   useEffect(() => {
+
     async function fetchingOrders() {
+      setLoading(true);
       const config = {
         Authorization: `Bearer ${token}`,
       };
@@ -24,6 +42,7 @@ const MyOrder = () => {
       } catch (error) {
         console.log("feching order error=>", error);
       }
+      setLoading(false);
     }
     fetchingOrders();
   }, []);
@@ -35,7 +54,7 @@ const MyOrder = () => {
           My Orders
         </h1>
         <div className="p-5 border rounded m-6">
-            <OrderTable orders={orders} />
+            <OrderTable orders={orders}  loading={loading}  />
         </div>
            
     </div>

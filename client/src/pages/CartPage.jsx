@@ -17,7 +17,21 @@ const CartPage = () => {
   const { cart, total, totalItem } = useSelector((state) => state.cart);
   const { user } = useSelector((state)=> state.profile) ;
 
-  const token = JSON.parse(localStorage.getItem("token"));
+  function getWithExpiry(key) {
+    const itemString = localStorage.getItem(key);
+    if (!itemString) {
+        return null;
+    }
+    const item = JSON.parse(itemString);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return null;
+    }
+    return item.value;
+}
+
+  const token = getWithExpiry("token");
   console.log("token->", token);
 
   //console.log("add=>", address);

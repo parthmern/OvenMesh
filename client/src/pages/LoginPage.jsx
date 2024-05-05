@@ -47,8 +47,26 @@ const LoginPage = () => {
         throw new Error(response.data.message)
       }
 
-      localStorage.setItem("token", JSON.stringify(response.data.cookies.token));
-      localStorage.setItem("user", JSON.stringify(response.data.findingUser));
+      // Function to set item in localStorage with expiration time
+      function setWithExpiry(key, value, ttl) {
+        const now = new Date();
+        const item = {
+            value: value,
+            expiry: now.getTime() + ttl // Expiration time in milliseconds
+        };
+        localStorage.setItem(key, JSON.stringify(item));
+      }
+
+      const tokenExpiry = 24 * 60 * 60 * 1000; // 24 hours
+      const userExpiry = 24 * 60 * 60 * 1000; // 24 hours
+
+
+      setWithExpiry("token", response.data.cookies.token, tokenExpiry);
+      setWithExpiry("user", response.data.findingUser, userExpiry);
+
+
+      //localStorage.setItem("token", JSON.stringify(response.data.cookies.token));
+      //localStorage.setItem("user", JSON.stringify(response.data.findingUser));
 
       // Function to set a cookie
 					function setCookie(name, value, days) {
