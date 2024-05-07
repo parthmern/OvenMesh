@@ -14,6 +14,11 @@ const io = socketIO(server, {
     }
 });
 
+// //solving CORS issue
+// const cors = require('cors'); // Import the cors module
+// // Enable CORS for all routes
+// app.use(cors());
+
 io.on('connection', (socket) => {
     console.log('✨🔌in server, a user connected with', socket.id);
 
@@ -46,10 +51,16 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 const cors = require("cors");
-app.use(cors({
+const corsOptions = {
     origin: '*',
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
-}));
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
+
 const fileUpload = require("express-fileupload");
 app.use(
     fileUpload({
