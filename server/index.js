@@ -15,17 +15,21 @@ require("dotenv").config();
 // ===============================================
 
 // Socket IO
-const { Server } = require("socket.io");
-const {createServer} = require("http");
-const server = createServer(app);
+// const { Server } = require("socket.io");
+// const {createServer} = require("http");
+// const server = createServer(app);
 
-const io = new Server(server,  {
-    cors : {
-        origin : "*",
-        methods :["GET", "POST"],
-        credentials : true,
-    }
-});
+// const io = new Server(server,  {
+//     cors : {
+//         origin : "*",
+//         methods :["GET", "POST"],
+//         credentials : true,
+//     }
+// });
+
+var server = require('http').Server();
+
+var io = require('socket.io')(server);
 
 io.on('connection', (socket) => {
     console.log('✨🔌in server, a user connected with', socket.id);
