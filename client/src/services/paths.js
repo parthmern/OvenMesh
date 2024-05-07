@@ -1,5 +1,5 @@
 
-const url = "http://localhost:4000/";
+const url = "https://oven-mesh-parthmerngmailcoms-projects.vercel.app/";
 
 const menu = "menu/";
 const user = "user/";
