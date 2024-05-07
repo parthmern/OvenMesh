@@ -70,7 +70,7 @@ cloudinaryConnect();
 // 💙Middlewares -------------------------------------------------
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser.urlencoded());
 app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
