@@ -16,7 +16,8 @@ require("dotenv").config();
 
 // Socket IO
 const { Server } = require("socket.io");
-const {createServer} = require("http");
+let http = require('http').Server(app);
+const {createServer} = require(http);
 const server = createServer(app);
 
 const io = new Server(server,  {
