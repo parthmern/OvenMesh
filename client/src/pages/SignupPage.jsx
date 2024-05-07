@@ -29,7 +29,7 @@ const SignupPage = () => {
       const response = await apiConnector("POST", url + user + "signup", {name, email, password} );
       console.log("res=>", response);
 
-      toast.success("Signup done");
+      toast.success("Signup Successful - do login now");
 
       navigate("/login");
       
