@@ -102,7 +102,7 @@ const gettingPizzaController = async (req, res) =>{
             }
         );
 
-        console.log("✅ allPizzas=> ", allPizzas);
+        //console.log("✅ allPizzas=> ", allPizzas);
 
         if(!allPizzas){
 

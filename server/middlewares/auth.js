@@ -78,6 +78,8 @@ const isAdmin = async (req, res, next) =>{
 
         const {_id:id, name, email} = req.body ;
 
+        console.log({_id:id, name, email});
+
         // not goood way
         // i have to make different schema and then verify it from that schema's email ids
         // i should create a new admin schema and then i have to match the userID of this request and the userId of admin which is in schema

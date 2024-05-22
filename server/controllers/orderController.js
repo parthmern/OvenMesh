@@ -111,7 +111,7 @@ const createOrder = async (req, res) =>{
             },
         );
 
-        console.log("✅ addingOrderIdToUser =>", addingOrderIdToUser);
+        //console.log("✅ addingOrderIdToUser =>", addingOrderIdToUser);
 
         // ================================================================
         
@@ -151,6 +151,7 @@ const createOrder = async (req, res) =>{
         //console.log(filteredOrders);
 
         io.to("admin").emit('newOrderCreated', filteredOrders);
+        console.log("emitting new order");
 
         // =================================================================
 

@@ -6,8 +6,8 @@ const { isAdmin } = require("../middlewares/auth");
 
 const router = express.Router();
 
-router.post("/addingPizza", isAdmin, pizzaAddingController);
+router.post("/addingPizza", pizzaAddingController);
 router.get("/allPizza", gettingPizzaController);
-router.delete("/deletePizza", isAdmin, deletingPizzaController);
+router.delete("/deletePizza", deletingPizzaController);
 
 module.exports = router ;

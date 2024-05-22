@@ -13,7 +13,7 @@ const getAllLiveOrders = async (req, res) =>{
         });
         
 
-        console.log("all user->", allUser);
+        //console.log("all user->", allUser);
 
         const liveOrder = allUser.map((user)=>{
             console.log(user.orders.filter((order)=>{
