@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const Order = require("../models/Order");
 const Pizza = require("../models/Pizza");
 const User = require("../models/User");
-const io = require("..");
+const io = require("../index")
 
 
 

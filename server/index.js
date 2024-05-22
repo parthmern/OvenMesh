@@ -4,6 +4,8 @@ const socketIO = require("socket.io");
 const dbConnect = require('./config/dbConnect');
 const cloudinaryConnect = require('./config/cloudinaryConnect');
 
+require("dotenv").config();
+
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, {
@@ -33,15 +35,39 @@ io.on('connection', (socket) => {
     });
 });
 
+module.exports = io;
+
 const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => {
     console.log(`server running on ${PORT}`);
 });
 
-app.get("/", (req, res) => {
-    res.send("server working");
-});
+
+
+
+// ================= DEPLOYMENT -PRODUCTION START
+const path = require("path");
+
+const __dirname1 = path.resolve(__dirname, '..');
+if(process.env.NODE_ENV == "production"){
+    console.log(__dirname1);
+    console.log(__dirname1, "/client/build");
+    app.use(express.static(path.join(__dirname1, "/client/build")))
+
+    app.get("/", (req, res)=>{
+        res.sendFile(path.resolve(__dirname1,"client","build","index.html"));
+    })
+}
+else{
+    app.get("/", (req, res) => {
+        res.send("server working without production");
+    });
+}
+
+
+// ================= DEPLOYMENT -PRODUCTION END
+
 
 //=================================
 // 💙Middlewares -------------------------------------------------
